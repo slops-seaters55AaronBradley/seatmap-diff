@@ -43,13 +43,14 @@ seatmap-diff --base staging.yaml --target production.yaml --ignore metadata.time
 ### Flags
 
 | Flag | Description | Default |
-|------|-------------|---------|
+|------|-------------|----------|
 | `--base` | Path to the base config file | required |
 | `--target` | Path to the target config file | required |
 | `--format` | Output format: `text`, `json`, `yaml` | `text` |
 | `--output` | Write output to a file instead of stdout | — |
 | `--ignore` | Comma-separated list of keys to ignore | — |
 | `--strict` | Exit with non-zero code if differences are found | `false` |
+| `--depth` | Limit diff traversal to N levels deep (0 = unlimited) | `0` |
 
 ---
 
@@ -60,6 +61,16 @@ seatmap-diff --base staging.yaml --target production.yaml --ignore metadata.time
 [ADDED]    server.autoscaling       true
 [REMOVED]  database.legacy_mode
 ```
+
+---
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | No differences found (or `--strict` not set) |
+| `1` | Differences found (when `--strict` is set) |
+| `2` | Error during execution (e.g. invalid file, parse failure) |
 
 ---
 
