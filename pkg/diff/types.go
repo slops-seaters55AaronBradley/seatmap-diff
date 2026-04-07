@@ -85,3 +85,16 @@ func (r *Result) Summary() string {
 	}
 	return fmt.Sprintf("%d added, %d removed, %d modified", added, removed, modified)
 }
+
+// ByType returns a filtered slice of changes that match the given ChangeType.
+// This is useful when callers want to inspect only additions, removals, or
+// modifications independently.
+func (r *Result) ByType(ct ChangeType) []Change {
+	var filtered []Change
+	for _, c := range r.Changes {
+		if c.Type == ct {
+			filtered = append(filtered, c)
+		}
+	}
+	return filtered
+}
