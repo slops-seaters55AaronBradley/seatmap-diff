@@ -64,8 +64,22 @@ func init() {
 	rootCmd.AddCommand(auditCmd)
 }
 
+// validateOutputFormat returns an error if the given format is not supported.
+func validateOutputFormat(format string) error {
+	switch format {
+	case "text", "json", "yaml":
+		return nil
+	default:
+		return fmt.Errorf("unsupported output format %q: must be one of text, json, yaml", format)
+	}
+}
+
 // runDiff is the handler for the diff subcommand.
 func runDiff(cmd *cobra.Command, args []string) error {
+	if err := validateOutputFormat(outputFormat); err != nil {
+		return err
+	}
+
 	fileA := args[0]
 	fileB := args[1]
 
@@ -78,6 +92,10 @@ func runDiff(cmd *cobra.Command, args []string) error {
 
 // runAudit is the handler for the audit subcommand.
 func runAudit(cmd *cobra.Command, args []string) error {
+	if err := validateOutputFormat(outputFormat); err != nil {
+		return err
+	}
+
 	baseline := args[0]
 	target := args[1]
 
