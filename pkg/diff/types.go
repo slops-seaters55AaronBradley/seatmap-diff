@@ -98,3 +98,19 @@ func (r *Result) ByType(ct ChangeType) []Change {
 	}
 	return filtered
 }
+
+// Count returns the total number of changes in the result set.
+func (r *Result) Count() int {
+	return len(r.Changes)
+}
+
+// CountByType returns the number of changes that match the given ChangeType.
+func (r *Result) CountByType(ct ChangeType) int {
+	count := 0
+	for _, c := range r.Changes {
+		if c.Type == ct {
+			count++
+		}
+	}
+	return count
+}
